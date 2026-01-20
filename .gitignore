@@ -1,0 +1,66 @@
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Configuration files with sensitive data
+config/config.php
+config/firebase-service-account.json
+config/google-services.json
+config/apple-private-key.p8
+
+# Composer
+/vendor/
+composer.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+error_log
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Uploads
+uploads/
+public/uploads/
+
+# Database
+*.sql.backup
+*.sql.gz
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# PHPUnit
+phpunit.xml
+.phpunit.result.cache
+
+# Build files
+build/
+dist/
+
+# Node modules (if using any frontend build tools)
+node_modules/
+package-lock.json
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Local development
+local_config.php
