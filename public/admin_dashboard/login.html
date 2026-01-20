@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Login | Student Admin Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Super Admin Portal</h1>
+            <p>Enter your credentials to access the administrative dashboard</p>
+        </div>
+        
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your admin email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" id="loginButton" class="login-button">Login as Super Admin</button>
+            
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+        
+        <div class="super-admin-notice">
+            <p><strong>Note:</strong> This portal is restricted to super administrators only.</p>
+        </div>
+    </div>
+    
+    <footer class="login-footer">
+        <p>&copy; 2025 Student Admin Dashboard</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

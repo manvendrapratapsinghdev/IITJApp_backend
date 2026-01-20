@@ -1,0 +1,103 @@
+<div class="module-header">
+    <h2>Approval Management</h2>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="approvalSearch" placeholder="Search by user or request...">
+    </div>
+    <select class="form-control" id="statusFilter" style="width: auto;">
+        <option value="">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+    </select>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="approvalsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Request Type</th>
+                <th>Requested Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="approvalsLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="approvalsError" class="error-container" style="display: none;">
+        <p>Error loading approvals. Please try again.</p>
+        <button class="btn btn-primary" id="retryApprovalsBtn">Retry</button>
+    </div>
+    <div id="noApprovalsMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No approval requests found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Approval Details Modal -->
+<div class="modal" id="approvalDetailsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Approval Request Details</h3>
+            <button class="modal-close" id="closeApprovalDetailsModal">&times;</button>
+        </div>
+        <div class="modal-body" id="approvalDetailsContent">
+            <!-- Approval details will be loaded here -->
+        </div>
+        <div class="modal-footer" id="approvalActionsFooter">
+            <button class="btn btn-success" id="approveRequestBtn">Approve</button>
+            <button class="btn btn-danger" id="rejectRequestBtn">Reject</button>
+            <button class="btn" id="cancelApprovalDetailsBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Change Role Modal -->
+<div class="modal" id="changeRoleModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Change User Role</h3>
+            <button class="modal-close" id="closeChangeRoleModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to change this admin's role back to a regular user?</p>
+            <div class="form-group">
+                <label for="roleChangeReason">Reason for Role Change</label>
+                <textarea id="roleChangeReason" class="form-control" rows="3" placeholder="Please provide a reason for changing the role..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" id="confirmChangeRoleBtn">Change Role</button>
+            <button class="btn" id="cancelChangeRoleBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Action Confirmation Modal -->
+<div class="modal" id="confirmActionModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="confirmActionTitle">Confirm Action</h3>
+            <button class="modal-close" id="closeConfirmActionModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="confirmActionMessage">Are you sure you want to perform this action?</p>
+            <div class="form-group">
+                <label for="actionReason">Reason (Optional)</label>
+                <textarea id="actionReason" class="form-control" rows="3" placeholder="Provide a reason for this action..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" id="confirmActionBtn">Confirm</button>
+            <button class="btn" id="cancelActionBtn">Cancel</button>
+        </div>
+    </div>
+</div>

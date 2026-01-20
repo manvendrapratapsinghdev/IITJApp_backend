@@ -1,0 +1,137 @@
+<div class="module-header">
+    <h2>Subject Management</h2>
+    <button class="btn btn-primary" id="addSubjectBtn">Add New Subject</button>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="subjectSearch" placeholder="Search by subject name...">
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="subjectsTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Order</th>
+                <th>Faculty</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="subjectsLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="subjectsError" class="error-container" style="display: none;">
+        <p>Error loading subjects. Please try again.</p>
+        <button class="btn btn-primary" id="retrySubjectsBtn">Retry</button>
+    </div>
+    <div id="noSubjectsMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No subjects found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Add/Edit Subject Modal -->
+<div class="modal" id="subjectModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="subjectModalTitle">Add New Subject</h3>
+            <button class="modal-close" id="closeSubjectModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="subjectForm">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="subjectName">Subject Name *</label>
+                        <input type="text" id="subjectName" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="subjectCode">Subject Code *</label>
+                        <input type="text" id="subjectCode" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="subjectOrder">Order</label>
+                        <input type="number" id="subjectOrder" class="form-control" min="1" placeholder="e.g., 1, 2, 3">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="subjectFaculty">Faculty</label>
+                        <select id="subjectFaculty" class="form-control">
+                            <option value="">Select Faculty</option>
+                            <!-- Faculty options will be loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="subjectCredits">Credits</label>
+                        <input type="number" id="subjectCredits" class="form-control" min="1" max="6">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subjectSemester">Semester</label>
+                    <input type="text" id="subjectSemester" class="form-control" placeholder="e.g., Fall 2024">
+                </div>
+                <div class="form-group">
+                    <label for="subjectDescription">Description</label>
+                    <textarea id="subjectDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="subjectSyllabusUrl">Syllabus URL</label>
+                    <input type="url" id="subjectSyllabusUrl" class="form-control" placeholder="https://example.com/syllabus.pdf">
+                </div>
+                <div class="form-group">
+                    <h5>Class Schedule</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="saturdaySchedule">Saturday</label>
+                            <input type="text" id="saturdaySchedule" class="form-control" placeholder="09:00-11:00">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="sundaySchedule">Sunday</label>
+                            <input type="text" id="sundaySchedule" class="form-control" placeholder="09:00-11:00">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5>Class Links</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="zoomLink">Zoom Link</label>
+                            <input type="url" id="zoomLink" class="form-control" placeholder="https://zoom.us/j/123456789">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="classroomLocation">Classroom Location</label>
+                            <input type="text" id="classroomLocation" class="form-control" placeholder="Room A101">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="saveSubjectBtn">Save Subject</button>
+            <button class="btn" id="cancelSubjectBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Subject Confirmation Modal -->
+<div class="modal" id="deleteSubjectModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeleteSubjectModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this subject? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" id="confirmDeleteSubjectBtn">Delete</button>
+            <button class="btn" id="cancelDeleteSubjectBtn">Cancel</button>
+        </div>
+    </div>
+</div>

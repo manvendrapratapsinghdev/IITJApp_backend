@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run PHP built-in server",
+			"type": "shell",
+			"command": "php -S localhost:8000 -t public",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run PHP built-in server",
+			"type": "shell",
+			"command": "php -S localhost:8000 -t public",
+			"args": [],
+			"isBackground": true,
+			"group": "build"
+		}
+	]
+}

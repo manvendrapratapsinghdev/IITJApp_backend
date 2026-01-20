@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "693857525815",
+    "project_id": "ai-gyan-connect",
+    "storage_bucket": "ai-gyan-connect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693857525815:android:92b29719c395edc8771fb2",
+        "android_client_info": {
+          "package_name": "com.tacrotech.aigyanconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693857525815-pen5bsvs4d83inhpblunlfom8l9kn2ld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tacrotech.aigyanconnect",
+            "certificate_hash": "7106dc49b93cc8864e21e52dde326c953fc487a9"
+          }
+        },
+        {
+          "client_id": "693857525815-vpso99jk4ku5so17sl8ekoum5q7b0vvv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tacrotech.aigyanconnect",
+            "certificate_hash": "5368bfcfde36e60349c214c80d50472f11651004"
+          }
+        },
+        {
+          "client_id": "693857525815-k6g95bghtavs5pvnh502uh8n57bbd12r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvEOtY0BE41DMJpdLrvjjNbLJu5kGYQRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693857525815-k6g95bghtavs5pvnh502uh8n57bbd12r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

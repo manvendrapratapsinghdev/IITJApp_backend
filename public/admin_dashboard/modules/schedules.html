@@ -1,0 +1,126 @@
+<div class="module-header">
+    <h2>Schedule Management</h2>
+    <button class="btn btn-primary" id="addScheduleBtn">Add New Schedule</button>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="scheduleSearch" placeholder="Search by title...">
+    </div>
+    <select class="form-control" id="typeFilter" style="width: auto;">
+        <option value="">All Types</option>
+        <option value="quiz">Quiz</option>
+        <option value="assignment">Assignment</option>
+    </select>
+    <select class="form-control" id="subjectFilter" style="width: auto;">
+        <option value="">All Subjects</option>
+        <!-- Subject options will be loaded dynamically -->
+    </select>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="schedulesTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Subject</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="schedulesLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="schedulesError" class="error-container" style="display: none;">
+        <p>Error loading schedules. Please try again.</p>
+        <button class="btn btn-primary" id="retrySchedulesBtn">Retry</button>
+    </div>
+    <div id="noSchedulesMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No schedules found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Add/Edit Schedule Modal -->
+<div class="modal" id="scheduleModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="scheduleModalTitle">Add New Schedule</h3>
+            <button class="modal-close" id="closeScheduleModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="scheduleForm">
+                <div class="form-group">
+                    <label for="scheduleTitle">Title *</label>
+                    <input type="text" id="scheduleTitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleType">Type *</label>
+                    <select id="scheduleType" class="form-control">
+                        <option value="">Select Type</option>
+                        <option value="quiz">Quiz</option>
+                        <option value="assignment">Assignment</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleSubject">Subject *</label>
+                    <select id="scheduleSubject" class="form-control">
+                        <option value="">Select Subject</option>
+                        <!-- Subject options will be loaded dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDueDate">Date *</label>
+                    <input type="date" id="scheduleDueDate" name="scheduleDueDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDueTime">Time *</label>
+                    <input type="time" id="scheduleDueTime" name="scheduleDueTime" class="form-control" value="09:00">
+                </div>
+                <p class="form-help-text" style="color: #666; font-size: 0.9em; margin-top: 10px;">* Required fields</p>
+                <div class="form-group">
+                    <label for="scheduleDescription">Description</label>
+                    <textarea id="scheduleDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleMaxMarks">Maximum Marks</label>
+                    <input type="number" id="scheduleMaxMarks" class="form-control" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleLocation">Location</label>
+                    <input type="text" id="scheduleLocation" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleInstructions">Instructions</label>
+                    <textarea id="scheduleInstructions" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="saveScheduleBtn">Save Schedule</button>
+            <button class="btn" id="cancelScheduleBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteScheduleModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeleteScheduleModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this schedule? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" id="confirmDeleteScheduleBtn">Delete</button>
+            <button class="btn" id="cancelDeleteScheduleBtn">Cancel</button>
+        </div>
+    </div>
+</div>

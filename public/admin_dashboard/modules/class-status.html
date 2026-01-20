@@ -1,0 +1,30 @@
+<div class="module-header">
+    <h2>Class Status Management</h2>
+    <p>Manage the status of today's classes for Saturday and Sunday.</p>
+    <button class="btn btn-primary" id="saveAllBtn">Save All Changes</button>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="classStatusTable">
+        <thead>
+            <tr>
+                <th>Subject Name</th>
+                <th>Saturday Status</th>
+                <th>Sunday Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="classStatusLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="classStatusError" class="error-container" style="display: none;">
+        <p>Error loading class statuses. Please try again.</p>
+        <button class="btn btn-primary" id="retryClassStatusBtn">Retry</button>
+    </div>
+    <div id="noClassStatusMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No subjects found.</p>
+    </div>
+</div>

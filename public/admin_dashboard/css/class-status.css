@@ -1,0 +1,33 @@
+/* class-status.css - Styles for class status management module */
+
+/* Status dropdown styling */
+.status-dropdown {
+    min-width: 120px;
+}
+
+.status-confirm {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.status-not-confirm {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+.status-canceled {
+    color: #f44336;
+    font-weight: 600;
+}
+
+/* Table styling for better readability */
+#classStatusTable td {
+    vertical-align: middle;
+}
+
+#classStatusTable select {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}

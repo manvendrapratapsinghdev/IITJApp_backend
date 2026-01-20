@@ -1,0 +1,162 @@
+/* posts.css - Styles for post management module */
+
+/* Module header styling */
+.module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.module-header h2 {
+    margin: 0;
+}
+
+.module-header button {
+    margin-left: auto;
+}
+
+/* Post type badges */
+.post-type {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.post-type.regular {
+    background-color: #e3f2fd;
+    color: #2196f3;
+}
+
+.post-type.announcement {
+    background-color: #fce4ec;
+    color: #e91e63;
+}
+
+/* Post status badges */
+.post-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.post-status.regular {
+    background-color: #e3fcef;
+    color: #27ae60;
+    text-transform: lowercase;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+}
+
+.post-status.announcement {
+    background-color: #fce4ec;
+    color: #e91e63;
+    text-transform: lowercase;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Post form styles */
+#postContent {
+    resize: vertical;
+    min-height: 150px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Post preview styling */
+#postPreviewContent {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.post-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.preview-section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.preview-section:last-child {
+    border-bottom: none;
+}
+
+.section-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.section-content {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Post preview modal */
+#postPreviewModal .modal-content {
+    width: 90%;
+    max-width: 800px;
+}
+
+#postPreviewModal .modal-body {
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+}
+
+.preview-section .post-status {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.preview-section a {
+    color: #2196f3;
+    text-decoration: none;
+}
+
+.preview-section a:hover {
+    text-decoration: underline;
+}
+
+/* Post table truncated content */
+.post-title {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

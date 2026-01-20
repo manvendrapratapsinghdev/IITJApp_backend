@@ -1,0 +1,141 @@
+/* approvals.css - Styles for approval management module */
+
+/* Approval status badges */
+.approval-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.approval-status.pending {
+    background-color: #fff3e0;
+    color: #f39c12;
+}
+
+.approval-status.approved {
+    background-color: #e3fcef;
+    color: #27ae60;
+}
+
+.approval-status.rejected {
+    background-color: #ffe9e9;
+    color: #e74c3c;
+}
+
+/* Request type badges */
+.request-type {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #f5f5f5;
+}
+
+/* Details container styling */
+.approval-details {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.approval-details-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.approval-details-value {
+    color: #333;
+}
+
+/* Request details section */
+.request-details {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+}
+
+.request-details h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+/* Decision history section */
+.decision-history {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.decision-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.decision-info {
+    flex-grow: 1;
+}
+
+.decision-action {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.decision-reason {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+}
+
+.decision-meta {
+    text-align: right;
+    color: #888;
+    font-size: 0.85em;
+}
+
+/* Approval actions footer styling */
+#approvalActionsFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Change Role button styling */
+.change-role-btn {
+    background-color: #f39c12 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.change-role-btn:hover {
+    background-color: #e67e22 !important;
+}
+
+/* Change Role modal specific styles */
+#changeRoleModal .modal-content {
+    max-width: 500px;
+}
+
+#changeRoleModal .form-group {
+    margin-top: 15px;
+}
+
+#changeRoleModal textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}

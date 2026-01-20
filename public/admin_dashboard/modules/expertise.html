@@ -1,0 +1,84 @@
+<![CDATA[<div class="module-header">
+    <h2>Expertise Management</h2>
+    <div class="header-actions">
+        <button class="btn btn-primary" id="addExpertiseBtn">Add New Expertise</button>
+        <button class="btn btn-secondary" onclick="showBulkAddExpertiseModal()" id="bulkAddExpertiseBtn">Bulk Add Expertise</button>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="expertiseSearch" placeholder="Search by name...">
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="expertiseTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="expertiseLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="expertiseError" class="error-container" style="display: none;">
+        <p>Error loading expertise list. Please try again.</p>
+        <button class="btn btn-primary" id="retryExpertiseBtn">Retry</button>
+    </div>
+    <div id="noExpertiseMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No expertise found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Add/Edit Expertise Modal -->
+<div class="modal" id="expertiseModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="expertiseModalTitle">Add New Expertise</h3>
+            <button class="modal-close" id="closeExpertiseModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="expertiseForm">
+                <input type="hidden" id="expertiseId">
+                <div class="form-group">
+                    <label for="expertiseName">Name</label>
+                    <input type="text" id="expertiseName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="expertiseDescription">Description</label>
+                    <textarea id="expertiseDescription" class="form-control" rows="4"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="saveExpertiseBtn">Save</button>
+            <button class="btn" id="cancelExpertiseBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteExpertiseModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeleteExpertiseModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this expertise? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" id="confirmDeleteExpertiseBtn">Delete</button>
+            <button class="btn" id="cancelDeleteExpertiseBtn">Cancel</button>
+        </div>
+    </div>
+</div>

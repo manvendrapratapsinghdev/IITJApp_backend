@@ -1,0 +1,82 @@
+/* faculty.css - Styles for faculty management module */
+
+/* Department badge styling */
+.department-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    background-color: #f5f5f5;
+    color: #555;
+}
+
+/* Faculty contact info styling */
+.faculty-email, 
+.faculty-phone {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: block;
+}
+
+.faculty-email {
+    color: #3498db;
+}
+
+/* Details view styling */
+.faculty-details {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.faculty-details-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.faculty-details-value {
+    color: #333;
+}
+
+.faculty-bio {
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.faculty-bio-text {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Form specific styles */
+#facultyForm {
+    max-width: 100%;
+}
+
+#facultyBio {
+    resize: vertical;
+}
+
+/* Faculty subjects list */
+.faculty-subjects {
+    margin-top: 20px;
+}
+
+.subject-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.subject-list li {
+    padding: 5px 10px;
+    background-color: #f5f5f5;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+}

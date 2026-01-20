@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admin Dashboard</title>
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Module-specific CSS -->
+    <link rel="stylesheet" href="css/users.css">
+    <link rel="stylesheet" href="css/subjects.css">
+    <link rel="stylesheet" href="css/notes.css">
+    <link rel="stylesheet" href="css/schedules.css">
+    <link rel="stylesheet" href="css/faculty.css">
+    <link rel="stylesheet" href="css/approvals.css">
+    <link rel="stylesheet" href="css/posts.css">
+    <link rel="stylesheet" href="css/expertise.css">
+    <link rel="stylesheet" href="css/class-status.css">
+    <link rel="stylesheet" href="css/change-password.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <button id="sidebarToggle" class="sidebar-toggle">☰</button>
+            <div class="app-title">Student Admin Dashboard</div>
+            <div class="user-actions">
+                <span id="adminName" class="admin-name">Super Admin</span>
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <nav class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <h3>Navigation</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="nav-link active" data-module="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-module="posts">Posts</a></li>
+                <li><a href="#" class="nav-link" data-module="schedules">Schedules</a></li>
+                <li><a href="#" class="nav-link" data-module="notes">Notes</a></li>
+                <li><a href="#" class="nav-link" data-module="subjects">Subjects</a></li>
+                <li><a href="#" class="nav-link" data-module="expertise">Expertise</a></li>
+                <li><a href="#" class="nav-link" data-module="users">Users</a></li>
+                <li><a href="#" class="nav-link" data-module="approvals">Approvals</a></li>
+                <li><a href="#" class="nav-link" data-module="class-status">Class Status</a></li>
+                <li><a href="#" class="nav-link" data-module="change-password">Change Password</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-content">
+            <!-- Home Page (Cards) -->
+            <div id="home-module" class="module-container active">
+                <h2>Dashboard Overview</h2>
+                <div class="card-grid">
+                    <div class="dashboard-card" data-module="posts">
+                        <div class="card-icon">📢</div>
+                        <h3>Posts</h3>
+                        <p>Create and manage posts and announcements</p>
+                    </div>
+                    <div class="dashboard-card" data-module="schedules">
+                        <div class="card-icon">📅</div>
+                        <h3>Schedules</h3>
+                        <p>Create and manage quizzes and assignments</p>
+                    </div>
+                    <div class="dashboard-card" data-module="notes">
+                        <div class="card-icon">📝</div>
+                        <h3>Notes</h3>
+                        <p>Manage and organize subject notes</p>
+                    </div>
+                    <div class="dashboard-card" data-module="subjects">
+                        <div class="card-icon">📚</div>
+                        <h3>Subjects</h3>
+                        <p>Manage subjects, upload and organize notes</p>
+                    </div>
+                    <div class="dashboard-card" data-module="expertise">
+                        <div class="card-icon">🎯</div>
+                        <h3>Expertise</h3>
+                        <p>Manage expertise categories and skills</p>
+                    </div>
+                    <div class="dashboard-card" data-module="users">
+                        <div class="card-icon">👥</div>
+                        <h3>Users</h3>
+                        <p>Manage user accounts, permissions, and status</p>
+                    </div>
+                    <div class="dashboard-card" data-module="approvals">
+                        <div class="card-icon">✅</div>
+                        <h3>Approvals</h3>
+                        <p>Review and manage access requests</p>
+                    </div>
+                    <div class="dashboard-card" data-module="faculty">
+                        <div class="card-icon">👨‍</div>
+                        <h3>Faculty</h3>
+                        <p>Manage faculty records and information</p>
+                    </div>
+                    <div class="dashboard-card" data-module="class-status">
+                        <div class="card-icon">📊</div>
+                        <h3>Class Status</h3>
+                        <p>Manage today's class statuses for Saturday and Sunday</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module containers will be dynamically loaded here -->
+            <div id="users-module" class="module-container"></div>
+            <div id="subjects-module" class="module-container"></div>
+            <div id="notes-module" class="module-container"></div>
+            <div id="schedules-module" class="module-container"></div>
+            <div id="faculty-module" class="module-container"></div>
+            <div id="approvals-module" class="module-container"></div>
+            <div id="posts-module" class="module-container"></div>
+            <div id="expertise-module" class="module-container"></div>
+            <div id="class-status-module" class="module-container"></div>
+            <div id="change-password-module" class="module-container"></div>
+        </main>
+    </div>
+
+    <!-- Notification component -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <!-- Module-specific JS -->
+    <script src="js/users.js"></script>
+    <script src="js/subjects.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/schedules.js"></script>
+    <script src="js/faculty.js"></script>
+    <script src="js/approvals.js"></script>
+    <script src="js/posts.js"></script>
+    <script src="js/expertise.js"></script>
+    <script src="js/class-status.js"></script>
+    <script src="js/change-password.js"></script>
+</body>
+</html>

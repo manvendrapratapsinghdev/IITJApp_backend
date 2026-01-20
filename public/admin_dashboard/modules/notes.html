@@ -1,0 +1,124 @@
+<!-- modules/notes.html -->
+<div class="notes-container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Notes Management</h2>
+        <button id="addNoteBtn" class="btn btn-primary" disabled>Add Note</button>
+    </div>
+
+    <!-- Subject Filter -->
+    <div class="form-group mb-4">
+        <label for="subjectFilter">Select Subject to view notes:</label>
+        <select class="form-control" id="subjectFilter">
+            <option value="">-- Select a Subject --</option>
+        </select>
+    </div>
+
+    <!-- Loading State -->
+    <div id="notesLoading" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading notes...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="notesError" class="error-message" style="display: none;">
+        <div class="error-content">
+            <h4>Failed to load notes</h4>
+            <p>Please try again later or contact support if the problem persists.</p>
+            <button id="retryNotesBtn" class="btn btn-primary">Retry</button>
+        </div>
+    </div>
+
+    <!-- No Subject Selected State -->
+    <div id="noSubjectSelected" class="alert alert-info">
+        <h4>No Subject Selected</h4>
+        <p>Please select a subject from the dropdown above to view and manage its notes.</p>
+    </div>
+
+    <!-- No Notes Message -->
+    <div id="noNotesMessage" class="alert alert-warning" style="display: none;">
+        <h4>No Notes Found</h4>
+        <p>No notes have been uploaded for this subject yet. Click "Add Note" to create the first note.</p>
+    </div>
+
+    <!-- Notes Table -->
+    <div id="notesTableContainer" style="display: none;">
+        <div class="table-container">
+            <table id="notesTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Uploaded By</th>
+                        <th>Upload Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Notes will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Note Modal -->
+<div id="noteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 id="noteModalTitle">Add Note</h5>
+            <span id="closeNoteModal" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="noteForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="noteTitle">Title *</label>
+                    <input type="text" id="noteTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="noteDescription">Description</label>
+                    <textarea id="noteDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="noteType">Note Type</label>
+                    <select id="noteType" class="form-control">
+                        <option value="file">Upload File</option>
+                        <option value="link">External Link</option>
+                        <option value="text">Text Note</option>
+                    </select>
+                </div>
+                <div class="form-group" id="fileUploadGroup">
+                    <label for="noteFile">Upload File</label>
+                    <input type="file" id="noteFile" class="form-control" accept=".pdf,.doc,.docx,.txt">
+                    <small class="form-text text-muted">Supported formats: PDF, DOC, DOCX, TXT (Max 10MB)</small>
+                </div>
+                <div class="form-group" id="linkInputGroup" style="display: none;">
+                    <label for="noteLink">External Link</label>
+                    <input type="url" id="noteLink" class="form-control" placeholder="https://example.com/document.pdf">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelNoteBtn" class="btn btn-secondary">Cancel</button>
+            <button type="button" id="saveNoteBtn" class="btn btn-primary">Save Note</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Note Confirmation Modal -->
+<div id="deleteNoteModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5>Confirm Delete</h5>
+            <span id="closeDeleteNoteModal" class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this note? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelDeleteNoteBtn" class="btn btn-secondary">Cancel</button>
+            <button type="button" id="confirmDeleteNoteBtn" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>

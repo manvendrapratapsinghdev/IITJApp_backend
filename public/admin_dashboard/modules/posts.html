@@ -1,0 +1,110 @@
+<div class="module-header">
+    <h2>Post Management</h2>
+    <button class="btn btn-primary" id="addPostBtn">Create New Post</button>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="postSearch" placeholder="Search by title or content...">
+    </div>
+    <select class="form-control" id="postTypeFilter" style="width: auto;">
+        <option value="">All Types</option>
+        <option value="regular">Regular</option>
+        <option value="announcement">Announcement</option>
+    </select>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="postsTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created By</th>
+                <th>Is Announcement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="postsLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="postsError" class="error-container" style="display: none;">
+        <p>Error loading posts. Please try again.</p>
+        <button class="btn btn-primary" id="retryPostsBtn">Retry</button>
+    </div>
+    <div id="noPostsMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No posts found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Add/Edit Post Modal -->
+<div class="modal" id="postModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="postModalTitle">Create New Post</h3>
+            <button class="modal-close" id="closePostModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="postDescription">Content</label>
+                    <textarea id="postDescription" class="form-control" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="postIsAnnouncement">
+                        <label for="postIsAnnouncement">Mark as Announcement</label>
+                    </div>
+                    <small class="text-muted">Announcements will be pushed to users' announcement center</small>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="savePostBtn">Publish Post</button>
+            <button class="btn" id="cancelPostBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Post Preview Modal -->
+<div class="modal" id="postPreviewModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Post Preview</h3>
+            <button class="modal-close" id="closePostPreviewModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="postPreviewContent">
+                <!-- Post preview content will be loaded here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" id="closePreviewBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deletePostModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeletePostModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" id="confirmDeletePostBtn">Delete</button>
+            <button class="btn" id="cancelDeletePostBtn">Cancel</button>
+        </div>
+    </div>
+</div>

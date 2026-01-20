@@ -1,0 +1,3689 @@
+{
+	"info": {
+		"_postman_id": "8849ae5f-e311-4057-beaf-0ee9c63cdbba",
+		"name": "Student Network App",
+		"description": "Complete API collection for Student Mobile App with comprehensive endpoint coverage including Authentication, User Management, Stream & Social features, Academic Management (Subjects & Schedules), Network Discovery, Announcements, Expertise Management, Faculty Management, and Admin Management with automatic authentication token handling for QA testing. Updated August 2025.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39674871",
+		"_collection_link": "https://htone1.postman.co/workspace/HTOne~8d9379fe-bd46-408b-84cf-5be122460419/collection/39674871-8849ae5f-e311-4057-beaf-0ee9c63cdbba?action=share&source=collection_link&creator=39674871"
+	},
+	"item": [
+		{
+			"name": "Authentication & Onboarding",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google OAuth Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Token received:\", response.token);",
+									"",
+									"// Set environment variables if login is successful",
+									"if (pm.response.code === 200 && response.token && response.user) {",
+									"    pm.environment.set(\"auth_token\", response.token);",
+									"    pm.environment.set(\"user_id\", response.user.id);",
+									"    pm.environment.set(\"user_email\", response.user.email);",
+									"    console.log(\"Auth token and user details saved to environment.\");",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"google_id\": \"123456789012238911\",\n    \"email\": \"g24ait11@iitj.ac.in\",\n    \"name\": \"Test User\",\n    \"phone\": \"\"\n  }"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/google",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Log all request details",
+									"console.log(\"Request Method:\", pm.request.method);",
+									"console.log(\"Request URL:\", pm.request.url.toString());",
+									"console.log(\"Request Headers:\", pm.request.headers.toJSON());",
+									"console.log(\"Request Body:\", pm.request.body.raw || 'No body');",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Onboarding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Manvendra\",\n    \"mobile\": \"+91-9876543210\",\n    \"whatsapp\": \"+91-9876543210\",\n    \"company\": \"Tech Solutions Pvt Ltd\",\n    \"expertise\": [\"Python\", \"JavaScript\", \"React\", \"Node.js\"],\n    \"experience\": \"2\",\n    \"program\": \"M.Tech\",\n    \"semester\": \"3\",\n    \"branch\": \"Computer Science\",\n    \"batch_year\": \"2024\",\n    \"phone\": \"+91-9876543210\",\n    \"linkedin_url\": \"https://linkedin.com/in/testuser\",\n    \"github_url\": \"https://github.com/testuser\",\n    \"bio\": \"Passionate M.Tech student in Computer Science\",\n    \"interests\": [\"Machine Learning\", \"Web Development\", \"Research\"],\n    \"age\": \"\",\n    \"admin_request\": true\n}\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/onboarding/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"onboarding",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Onboarding Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/onboarding/status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"onboarding",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Onboarding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/onboarding/reset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"onboarding",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Admin Token received:\", response.token);",
+									"",
+									"// Set environment variables if login is successful",
+									"if (pm.response.code === 200 && response.token && response.user) {",
+									"    pm.environment.set(\"admin_auth_token\", response.token);",
+									"    pm.environment.set(\"admin_user_id\", response.user.id);",
+									"    pm.environment.set(\"admin_user_email\", response.user.email);",
+									"    console.log(\"Admin auth token and user details saved to environment.\");",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@iitj.ac.in\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/admin-login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"admin-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Own Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/auth/self-delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"self-delete"
+							]
+						},
+						"description": "Permanently deletes the authenticated user's account and all associated data. This action is irreversible. After successful deletion, the authentication token will be invalidated."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\": \"currentPassword123\",\n    \"new_password\": \"newPassword123\",\n    \"confirm_password\": \"newPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						},
+						"description": "Change user's password. Requires current password for verification. The new password must be confirmed and meet security requirements."
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current_password\": \"currentPassword123\",\n    \"new_password\": \"newPassword123\",\n    \"confirm_password\": \"newPassword123\"\n}"
+								},
+								"url": "{{base_url}}/api/auth/change-password"
+							},
+							"status": "OK",
+							"code": 200,
+							"body": {
+								"success": true,
+								"message": "Password changed successfully"
+							}
+						},
+						{
+							"name": "Error - Current Password Invalid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current_password\": \"wrongPassword123\",\n    \"new_password\": \"newPassword123\",\n    \"confirm_password\": \"newPassword123\"\n}"
+								},
+								"url": "{{base_url}}/api/auth/change-password"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"body": {
+								"success": false,
+								"message": "Current password is incorrect"
+							}
+						},
+						{
+							"name": "Error - Passwords Don't Match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"current_password\": \"currentPassword123\",\n    \"new_password\": \"newPassword123\",\n    \"confirm_password\": \"differentPassword123\"\n}"
+								},
+								"url": "{{base_url}}/api/auth/change-password"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"body": {
+								"success": false,
+								"message": "New password and confirmation password do not match"
+							}
+						}
+					]
+				},
+				{
+					"name": "Update Device Token",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device_token\": \"fNKhxJksRp-7eXCQA_B_tJ:APA91bGxyz123abc456def789hij012klm345nop678qrs901tuv234wxy567zab890cde\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/device-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"device-token"
+							]
+						},
+						"description": "Updates the user's device token for push notifications. Send empty string or null to clear the device token."
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Device Token",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device_token\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/device-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"device-token"
+							]
+						},
+						"description": "Clears the user's device token to stop receiving push notifications."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Token Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/auth/device-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"device-token"
+							]
+						},
+						"description": "Gets the current device token status for the user, including whether they have a device token set and if they're eligible for push notifications."
+					},
+					"response": []
+				},
+				{
+					"name": "Apple Sign-In - First Login (Email Shared)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Apple Auth Response:\", response);",
+									"",
+									"// If account created/logged in successfully, save token",
+									"if (pm.response.code === 200 && response.token && response.user) {",
+									"    pm.environment.set(\"auth_token\", response.token);",
+									"    pm.environment.set(\"user_id\", response.user.id);",
+									"    pm.environment.set(\"user_email\", response.user.email);",
+									"    console.log(\"Auth token and user details saved to environment.\");",
+									"} else if (response.requires_email_verification) {",
+									"    // Save apple_user_id for email verification steps",
+									"    if (response.user && response.user.apple_user_id) {",
+									"        pm.environment.set(\"apple_user_id\", response.user.apple_user_id);",
+									"        console.log(\"Apple User ID saved. Proceed to email verification.\");",
+									"    }",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apple_user_id\": \"001234.abcd1234\",\n    \"email\": \"g24test123@iitj.ac.in\",\n    \"email_verified\": true,\n    \"is_private_email\": false,\n    \"name\": {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/apple",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"apple"
+							]
+						},
+						"description": "Apple Sign-In first login with IIT email shared. If valid IIT email (G24 prefix), creates account directly without OTP verification since Apple already verified the email."
+					},
+					"response": []
+				},
+				{
+					"name": "Apple Sign-In - First Login (Email Hidden)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Apple Auth Response:\", response);",
+									"",
+									"// Save apple_user_id for email verification flow",
+									"if (response.requires_email_verification && response.user) {",
+									"    pm.environment.set(\"apple_user_id\", response.user.apple_user_id);",
+									"    console.log(\"Email hidden by Apple. Proceed to manual email verification.\");",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apple_user_id\": \"009876.xyz789\",\n    \"email\": \"abc123@privaterelay.appleid.com\",\n    \"email_verified\": true,\n    \"is_private_email\": true,\n    \"name\": {\n        \"firstName\": \"John\",\n        \"lastName\": \"Doe\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/apple",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"apple"
+							]
+						},
+						"description": "Apple Sign-In with private relay email (Hide My Email feature). Requires manual IIT email verification via OTP flow."
+					},
+					"response": []
+				},
+				{
+					"name": "Apple Sign-In - Subsequent Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Apple Auth Response:\", response);",
+									"",
+									"// Save token if login successful",
+									"if (pm.response.code === 200 && response.token && response.user) {",
+									"    pm.environment.set(\"auth_token\", response.token);",
+									"    pm.environment.set(\"user_id\", response.user.id);",
+									"    console.log(\"Logged in successfully.\");",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"apple_user_id\": \"001234.abcd1234\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/apple",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"apple"
+							]
+						},
+						"description": "Subsequent Apple Sign-In logins. Apple only provides apple_user_id (no email or name). Returns auth token if user exists and email already verified."
+					},
+					"response": []
+				},
+				{
+					"name": "Send Verification OTP (If Email Hidden)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"g24test123@iitj.ac.in\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send-verification-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send-verification-otp"
+							]
+						},
+						"description": "Sends a 6-digit OTP verification code to the provided IIT email address. Email must be from @iitj.ac.in domain and start with 'G24'. OTP expires in 10 minutes. Rate limited to 3 requests per hour."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email & Complete Apple Sign-In (If Email Hidden)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response JSON",
+									"const response = pm.response.json();",
+									"console.log(\"Verification Response:\", response);",
+									"",
+									"// Set environment variables if verification is successful",
+									"if (pm.response.code === 200 && response.token && response.user) {",
+									"    pm.environment.set(\"auth_token\", response.token);",
+									"    pm.environment.set(\"user_id\", response.user.id);",
+									"    pm.environment.set(\"user_email\", response.user.email);",
+									"    console.log(\"Email verified! Auth token and user details saved to environment.\");",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"g24test123@iitj.ac.in\",\n    \"otp\": \"123456\",\n    \"apple_user_id\": \"{{apple_user_id}}\",\n    \"name\": \"Apple Test User\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/verify-email-apple-signin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"verify-email-apple-signin"
+							]
+						},
+						"description": "Verifies the OTP code and completes Apple Sign-In registration. Creates new account or links existing account with Apple ID. Returns authentication token on success."
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User Profile Management",
+			"item": [
+				{
+					"name": "Get User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate profile response structure",
+									"pm.test('Profile response has correct structure', function () {",
+									"    const response = pm.response.json();",
+									"    ",
+									"    if (pm.response.code === 200) {",
+									"        pm.expect(response).to.have.property('success', true);",
+									"        pm.expect(response).to.have.property('user');",
+									"        ",
+									"        const user = response.user;",
+									"        pm.expect(user).to.have.property('id');",
+									"        pm.expect(user).to.have.property('name');",
+									"        pm.expect(user).to.have.property('email');",
+									"        pm.expect(user).to.have.property('admin_request');",
+									"        ",
+									"        // Check admin_status when admin_request is true",
+									"        if (user.admin_request === true) {",
+									"            pm.expect(user).to.have.property('admin_status');",
+									"            console.log('User admin_status:', user.admin_status);",
+									"        }",
+									"        ",
+									"        console.log('User admin_request:', user.admin_request);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validate response structure matches GET profile",
+									"pm.test('Response has correct structure', function () {",
+									"    const response = pm.response.json();",
+									"    ",
+									"    if (pm.response.code === 200) {",
+									"        pm.expect(response).to.have.property('success', true);",
+									"        pm.expect(response).to.have.property('message');",
+									"        pm.expect(response).to.have.property('user');",
+									"        ",
+									"        const user = response.user;",
+									"        pm.expect(user).to.have.property('id');",
+									"        pm.expect(user).to.have.property('name');",
+									"        pm.expect(user).to.have.property('email');",
+									"        pm.expect(user).to.have.property('admin_request');",
+									"        ",
+									"        // Check admin_status when admin_request is true",
+									"        if (user.admin_request === true) {",
+									"            pm.expect(user).to.have.property('admin_status');",
+									"            pm.expect(user.admin_status).to.equal('pending');",
+									"        }",
+									"        ",
+									"        console.log('Updated user admin_status:', user.admin_status);",
+									"        console.log('Updated user admin_request:', user.admin_request);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Test User\",\n    \"phone\": \"+91-9876543211\",\n    \"whatsapp\": \"+91-9876543211\",\n    \"company\": \"Tech Solutions Pvt Ltd\",\n    \"expertise\": [\"Python\", \"JavaScript\", \"React\", \"Node.js\", \"Machine Learning\"],\n    \"experience\": \"3\",\n    \"linkedin_url\": \"https://linkedin.com/in/updateduser\",\n    \"github_url\": \"https://github.com/updateduser\",\n    \"bio\": \"Updated bio - Passionate about AI and ML with 3 years of experience\",\n    \"interests\": [\"Artificial Intelligence\", \"Machine Learning\", \"Deep Learning\", \"Web Development\"],\n    \"admin_request\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						},
+						"description": "Updates user profile. When admin_request is set to true, the response will include admin_status: 'pending'. The response format matches exactly with GET /api/user/profile."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Profile Picture",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profile_picture",
+									"description": "Upload a profile picture (JPG, PNG, max 5MB)",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/profile/picture",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Admin Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reason\": \"I would like to help manage the student community and assist with administrative tasks. I have experience in community management and am passionate about improving student engagement.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/admin-request",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"admin-request"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Stream & Social",
+			"item": [
+				{
+					"name": "Get Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts?page=1&limit=10&type=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "type",
+									"value": "all",
+									"description": "all, announcements, questions, discussions"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"MPS post\",\n    \"description\": \"This is a test post for the student community. Looking forward to connecting with fellow students!\",\n    \"is_announcement\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Post Title\",\n    \"description\": \"Updated description with new content\",\n    \"link\": \"https://updated-link.com\",\n    \"is_announcement\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Post Announcement Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_announcement\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/{{post_id}}/announcement",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"{{post_id}}",
+								"announcement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post (Admin Only)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/{{post_id}}/like",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"{{post_id}}",
+								"like"
+							]
+						},
+						"description": "Like a post. If already liked, returns success message. Response includes updated likes_count."
+					},
+					"response": [
+						{
+							"name": "Success - Post Liked",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{base_url}}/api/stream/posts/1/like"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Post liked successfully\",\n  \"likes_count\": 15\n}"
+						}
+					]
+				},
+				{
+					"name": "Unlike Post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/{{post_id}}/like",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"{{post_id}}",
+								"like"
+							]
+						},
+						"description": "Unlike a post. Removes the user's like from the post. Response includes updated likes_count."
+					},
+					"response": [
+						{
+							"name": "Success - Post Unliked",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/api/stream/posts/1/like"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Post unliked successfully\",\n  \"likes_count\": 14\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Post Likes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/stream/posts/{{post_id}}/likes?page=1&limit=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"posts",
+								"{{post_id}}",
+								"likes"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Items per page (default: 20, max: 100)"
+								}
+							]
+						},
+						"description": "Get paginated list of users who liked a post. Returns user details including id, name, email, profile_picture, and like timestamp."
+					},
+					"response": [
+						{
+							"name": "Success - Get Likes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/api/stream/posts/1/likes?page=1&limit=20"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"post_id\": 1,\n  \"likes\": [\n    {\n      \"user_id\": 5,\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\",\n      \"profile_picture\": \"https://example.com/profiles/john.jpg\",\n      \"liked_at\": \"2025-10-01 14:30:00\"\n    },\n    {\n      \"user_id\": 12,\n      \"name\": \"Jane Smith\",\n      \"email\": \"jane@example.com\",\n      \"profile_picture\": null,\n      \"liked_at\": \"2025-10-01 15:45:00\"\n    }\n  ],\n  \"pagination\": {\n    \"current_page\": 1,\n    \"total_pages\": 1,\n    \"total_likes\": 2,\n    \"per_page\": 20\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Post Comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/posts/{{post_id}}/comments?page=1&limit=20&sort=newest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Items per page (default: 20, max: 100)"
+								},
+								{
+									"key": "sort",
+									"value": "newest",
+									"description": "Sort order: newest, oldest (default: newest)"
+								}
+							]
+						},
+						"description": "Get paginated comments for a post. Returns comments with user details, sorted by newest or oldest first. Excludes soft-deleted comments."
+					},
+					"response": [
+						{
+							"name": "Success - Get Comments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/api/posts/1/comments?page=1&limit=20&sort=newest"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"post_id\": 1,\n  \"comments\": [\n    {\n      \"reply_id\": 15,\n      \"post_id\": 1,\n      \"user_id\": 5,\n      \"content\": \"Great post! Very informative.\",\n      \"created_at\": \"2025-10-01 16:30:00\",\n      \"updated_at\": \"2025-10-01 16:30:00\",\n      \"user_name\": \"John Doe\",\n      \"user_email\": \"john@example.com\",\n      \"user_profile_picture\": \"https://example.com/profiles/john.jpg\"\n    },\n    {\n      \"reply_id\": 14,\n      \"post_id\": 1,\n      \"user_id\": 12,\n      \"content\": \"Thanks for sharing this!\",\n      \"created_at\": \"2025-10-01 15:20:00\",\n      \"updated_at\": \"2025-10-01 15:20:00\",\n      \"user_name\": \"Jane Smith\",\n      \"user_email\": \"jane@example.com\",\n      \"user_profile_picture\": null\n    }\n  ],\n  \"pagination\": {\n    \"current_page\": 1,\n    \"total_pages\": 1,\n    \"total_comments\": 2,\n    \"per_page\": 20\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Add Comment to Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"This is a great post! Thanks for sharing your insights on this topic.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/posts/{{post_id}}/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"{{post_id}}",
+								"comments"
+							]
+						},
+						"description": "Add a comment to a post. Content must be between 1-1000 characters. XSS protection is applied automatically."
+					},
+					"response": [
+						{
+							"name": "Success - Comment Added",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"This is a great post! Thanks for sharing.\"\n}"
+								},
+								"url": "{{base_url}}/api/posts/1/comments"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Comment added successfully\",\n  \"comment\": {\n    \"reply_id\": 16,\n    \"post_id\": 1,\n    \"user_id\": 5,\n    \"content\": \"This is a great post! Thanks for sharing.\",\n    \"created_at\": \"2025-10-10 10:30:00\",\n    \"updated_at\": \"2025-10-10 10:30:00\",\n    \"user_name\": \"John Doe\",\n    \"user_email\": \"john@example.com\",\n    \"user_profile_picture\": \"https://example.com/profiles/john.jpg\"\n  }\n}"
+						},
+						{
+							"name": "Error - Content Too Long",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Very long content exceeding 1000 characters...\"\n}"
+								},
+								"url": "{{base_url}}/api/posts/1/comments"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Comment content must be between 1 and 1000 characters\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit Comment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"Updated comment content with new information and better formatting.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/comments/{{reply_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{reply_id}}"
+							]
+						},
+						"description": "Edit an existing comment. Only the comment owner or admin can edit. Content must be between 1-1000 characters."
+					},
+					"response": [
+						{
+							"name": "Success - Comment Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Updated comment content.\"\n}"
+								},
+								"url": "{{base_url}}/api/comments/16"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Comment updated successfully\",\n  \"comment\": {\n    \"reply_id\": 16,\n    \"post_id\": 1,\n    \"user_id\": 5,\n    \"content\": \"Updated comment content.\",\n    \"created_at\": \"2025-10-10 10:30:00\",\n    \"updated_at\": \"2025-10-10 11:15:00\",\n    \"user_name\": \"John Doe\",\n    \"user_email\": \"john@example.com\",\n    \"user_profile_picture\": \"https://example.com/profiles/john.jpg\"\n  }\n}"
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Trying to edit someone else's comment.\"\n}"
+								},
+								"url": "{{base_url}}/api/comments/16"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": false,\n  \"message\": \"You can only edit your own comments\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/comments/{{reply_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"{{reply_id}}"
+							]
+						},
+						"description": "Soft delete a comment. Only the comment owner or admin can delete. The comment is marked as deleted but not removed from database."
+					},
+					"response": [
+						{
+							"name": "Success - Comment Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/api/comments/16"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Comment deleted successfully\"\n}"
+						},
+						{
+							"name": "Error - Already Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/api/comments/16"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"success\": false,\n  \"message\": \"Comment not found\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Academic - Subjects & Schedules",
+			"item": [
+				{
+					"name": "Subject",
+					"item": [
+						{
+							"name": "Get Subjects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/semester/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Subject Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/semester/subjects/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"subjects",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Note",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "link",
+											"value": "https://www.hitlink.com",
+											"description": "Upload note file (PDF, DOC, DOCX, max 10MB)",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "Chapter 1 - Introduction to Machine Learning",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Comprehensive notes covering basic concepts of ML",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/semester/subjects/2/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"subjects",
+										"2",
+										"notes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Subject Notes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/semester/subjects/2/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"subjects",
+										"2",
+										"notes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Note",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/semester/subjects/{{subject_id}}/notes/{{note_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"subjects",
+										"{{subject_id}}",
+										"notes",
+										"{{note_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Schedule",
+					"item": [
+						{
+							"name": "Get Schedules",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/semester/schedules",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Schedule",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"subject_id\": 1,\n    \"title\": \"Machine Learning Lecture\",\n    \"description\": \"Introduction to supervised learning algorithms\",\n    \"type\": \"class\",\n    \"date\": \"2025-08-22\",\n    \"start_time\": \"10:00:00\",\n    \"end_time\": \"11:30:00\",\n    \"location\": \"Room 101, Academic Block\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/semester/schedules",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"semester",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Network Discovery",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/network/users?page=1&limit=20&sort=name&order=asc&company=Tech Solutions&expertise=Python",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"network",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"description": "Users per page (default: 20)"
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Sort field: created_at, name, experience, company"
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"description": "Sort order: asc, desc"
+								},
+								{
+									"key": "company",
+									"value": "Tech Solutions",
+									"description": "Filter by company name",
+									"disabled": true
+								},
+								{
+									"key": "expertise",
+									"value": "Python",
+									"description": "Filter by expertise/skills",
+									"disabled": true
+								},
+								{
+									"key": "experience_min",
+									"value": "2",
+									"description": "Minimum years of experience",
+									"disabled": true
+								},
+								{
+									"key": "experience_max",
+									"value": "5",
+									"description": "Maximum years of experience",
+									"disabled": true
+								},
+								{
+									"key": "role",
+									"value": "user",
+									"description": "Filter by user role: student, admin, faculty",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "test",
+									"description": "Search in name, company, expertise, email",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/network/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"network",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/network/search?q=Updated&skills=Python&interests=Machine Learning",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"network",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Updated",
+									"description": "Search query for name, email, or bio"
+								},
+								{
+									"key": "skills",
+									"value": "Python"
+								},
+								{
+									"key": "interests",
+									"value": "Machine Learning"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Filter Options",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/network/filters",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"network",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Announcements",
+			"item": [
+				{
+					"name": "Notification Preferences",
+					"item": [
+						{
+							"name": "Get Notification Preferences",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/notifications/preferences",
+									"host": ["{{base_url}}"],
+									"path": ["api", "notifications", "preferences"]
+								},
+								"description": "Get user's notification preferences including master switch and category settings"
+							},
+							"response": [
+								{
+									"name": "Success Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": "{{base_url}}/api/notifications/preferences"
+									},
+									"status": "OK",
+									"code": 200,
+									"body": {
+										"success": true,
+										"preferences": {
+											"master_notifications": true,
+											"post_notifications": true,
+											"notes_notifications": true,
+											"announcement_notifications": true,
+											"connection_notifications": true,
+											"schedule_notifications": true
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Update Notification Preferences",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"master_notifications\": true,\n    \"post_notifications\": true,\n    \"notes_notifications\": false,\n    \"announcement_notifications\": true,\n    \"connection_notifications\": true,\n    \"schedule_notifications\": false\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/notifications/preferences",
+									"host": ["{{base_url}}"],
+									"path": ["api", "notifications", "preferences"]
+								},
+								"description": "Update user's notification preferences. When master_notifications is false, all category settings will be ignored and treated as false. Category fields are optional - only provided fields will be updated."
+							},
+							"response": [
+								{
+									"name": "Success Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": "{{base_url}}/api/notifications/preferences"
+									},
+									"status": "OK",
+									"code": 200,
+									"body": {
+										"success": true,
+										"message": "Notification preferences updated successfully",
+										"preferences": {
+											"master_notifications": true,
+											"post_notifications": true,
+											"notes_notifications": false,
+											"announcement_notifications": true,
+											"connection_notifications": true,
+											"schedule_notifications": false
+										}
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get Stream Announcements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/announcements?page=1&limit=20&type=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"announcements"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "type",
+									"value": "all",
+									"description": "all, announcements, questions, discussions"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Announcements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/announcements?page=1&limit=20&type=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"announcements"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "type",
+									"value": "all",
+									"description": "all, post, schedule, system, admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark User Announcement as Read",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/announcements/1/read",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"notifications",
+								"1",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark All User Announcements as Read",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/announcements/read-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"notifications",
+								"read-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Announcement",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/announcements/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"notifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Announcement as Read (Legacy)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/1/read",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"1",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark All Announcements as Read (Legacy)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/read-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"read-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Announcement (Legacy)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Announcement Preferences (Legacy)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/notifications/preferences",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"preferences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Announcement Preferences (Legacy)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email_notifications\": true,\n    \"push_notifications\": true,\n    \"post_notifications\": true,\n    \"schedule_notifications\": true,\n    \"system_notifications\": true,\n    \"admin_notifications\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/notifications/preferences",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"notifications",
+								"preferences"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Expertise Management",
+			"item": [
+				{
+					"name": "Get All Expertise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/expertise",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Expertise by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/expertise/{{expertise_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise",
+								"{{expertise_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Expertise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Machine Learning\",\n  \"description\": \"Advanced machine learning techniques and algorithms\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expertise",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bulk Expertise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"expertise\": [\n    {\n      \"name\": \"Python Programming\",\n      \"description\": \"Advanced Python development skills\"\n    },\n    {\n      \"name\": \"Data Science\",\n      \"description\": \"Data analysis and visualization\"\n    },\n    {\n      \"name\": \"Web Development\",\n      \"description\": \"Full-stack web development\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expertise/bulk",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Expertise",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Advanced Machine Learning\",\n  \"description\": \"Deep learning and neural networks\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expertise/{{expertise_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise",
+								"{{expertise_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Expertise",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/expertise/{{expertise_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expertise",
+								"{{expertise_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auth_token}}",
+						"type": "string"
+					}
+				]
+			}
+		},
+		{
+			"name": "Admin Management",
+			"item": [
+				{
+					"name": "User Management",
+					"item": [
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reason\": \"User requested account deletion\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Restore User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}/restore",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}",
+										"restore"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Block User",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reason\": \"Violation of community guidelines\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}/block",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}",
+										"block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unblock User",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}/unblock",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}",
+										"unblock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Demote Admin to User",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}/demote",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}",
+										"demote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Deleted Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/deleted?page=1&limit=20",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"deleted"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Blocked Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/blocked?page=1&limit=20",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"blocked"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/{{user_id}}/status",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										"{{user_id}}",
+										"status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Subject Management",
+					"item": [
+						{
+							"name": "Create Subject",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"DS101111\",\n  \"name\": \"DSA\",\n  \"faculty_id\": null,\n  \"credits\": 3,\n  \"semester\": \"Fall 2024\",\n  \"description\": \"Basic concepts of computer science and programming fundamentals\",\n  \"syllabus_url\": \"https://example.com/syllabus/cs101.pdf\",\n  \"class_schedule\": {\n    \"monday\": \"09:00-11:00\",\n    \"wednesday\": \"09:00-11:00\"\n  },\n  \"class_links\": {\n    \"zoom\": \"https://zoom.us/j/123456789\",\n    \"classroom\": \"Room A101\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Subject",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Advanced Computer Science\",\n  \"credits\": 4,\n  \"description\": \"Updated description for advanced topics\",\n  \"faculty_id\": null,\n  \"class_schedule\": {\n    \"tuesday\": \"10:00-12:00\",\n    \"thursday\": \"10:00-12:00\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects/{{subject_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects",
+										"{{subject_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Subject",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects/{{subject_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects",
+										"{{subject_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Faculty Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects/faculty",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects",
+										"faculty"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Subject - Minimal",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"MATH201\",\n  \"name\": \"Calculus II\",\n  \"credits\": 4,\n  \"semester\": \"Spring 2024\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Subject - With Faculty",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"PHYS301\",\n  \"name\": \"Quantum Physics\",\n  \"faculty_id\": 7,\n  \"credits\": 5,\n  \"semester\": \"Fall 2024\",\n  \"description\": \"Introduction to quantum mechanics and its applications\",\n  \"syllabus_url\": \"https://example.com/syllabus/phys301.pdf\",\n  \"class_schedule\": {\n    \"monday\": \"14:00-16:00\",\n    \"wednesday\": \"14:00-16:00\",\n    \"friday\": \"10:00-12:00\"\n  },\n  \"class_links\": {\n    \"zoom\": \"https://zoom.us/j/987654321\",\n    \"classroom\": \"Physics Lab 203\",\n    \"materials\": \"https://drive.google.com/folder/physics301\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Schedule Management",
+					"item": [
+						{
+							"name": "Create Schedule (Quiz)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"quiz\",\n  \"title\": \"Quiz 1 - Data Structures\",\n  \"description\": \"Basic concepts of arrays and linked lists\",\n  \"subject_id\": 1,\n  \"date\": \"2025-09-15\",\n  \"duration_minutes\": 60,\n  \"location\": \"Room 301\",\n  \"instructions\": \"Bring calculator and student ID\",\n  \"max_marks\": 50\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/schedules",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Schedule (Assignment)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"assignment\",\n  \"title\": \"Programming Assignment 1\",\n  \"description\": \"Implement sorting algorithms in Python\",\n  \"subject_id\": 1,\n  \"date\": \"2025-09-20\",\n  \"duration_minutes\": null,\n  \"location\": \"Online Submission\",\n  \"instructions\": \"Submit via LMS platform\",\n  \"submission_link\": \"https://lms.university.edu/submit/assignment1\",\n  \"max_marks\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/schedules",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"schedules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Schedule",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Quiz 1 - Data Structures (Updated)\",\n  \"date\": \"2025-09-16\",\n  \"duration_minutes\": 90,\n  \"max_marks\": 75\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/schedules/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"schedules",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Schedule",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/schedules/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"schedules",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Subjects for Schedule",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/schedules/subjects",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"schedules",
+										"subjects"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Faculty Management",
+					"description": "Faculty members are created and managed exclusively by super admins. Unlike regular users, faculty members do not use the standard user authentication flow and are managed entirely through these admin API endpoints.",
+					"item": [
+						{
+							"name": "Create Faculty",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Dr. Jane Smith\",\n  \"email\": \"jane.smith@university.edu\",\n  \"phone\": \"+91-9876543210\",\n  \"password\": \"SecureFacultyPass123!\",\n  \"bio\": \"Professor of Computer Science with 15 years of experience in AI and Machine Learning.\",\n  \"expertise\": \"Artificial Intelligence, Machine Learning, Neural Networks\",\n  \"experience\": \"15\",\n  \"company\": \"University of Technology\",\n  \"linkedin\": \"https://linkedin.com/in/janesmith\",\n  \"whatsapp\": \"+91-9876543210\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/faculty",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"faculty"
+									]
+								},
+								"description": "Creates a faculty entry in the system. Note that faculty are not regular users and don't login through the normal authentication flow."
+							},
+							"response": []
+						},
+						{
+							"name": "List Faculty",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/faculty?page=1&limit=20",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"faculty"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Faculty Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/faculty/{{faculty_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"faculty",
+										"{{faculty_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Faculty",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Dr. Jane Smith, Ph.D.\",\n  \"phone\": \"+91-9876543211\",\n  \"bio\": \"Professor of Computer Science with 15 years of experience in AI and Machine Learning. Recently published research on deep learning applications in healthcare.\",\n  \"expertise\": \"Artificial Intelligence, Machine Learning, Neural Networks, Deep Learning\",\n  \"experience\": \"16\",\n  \"linkedin\": \"https://linkedin.com/in/janesmithedu\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/faculty/{{faculty_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"faculty",
+										"{{faculty_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Faculty",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reason\": \"Faculty member has retired from teaching.\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/faculty/{{faculty_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"faculty",
+										"{{faculty_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Database & Setup",
+					"item": [
+						{
+							"name": "Setup Database",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/setup-database",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"setup-database"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Quick Setup",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/quick-setup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"quick-setup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Clear All Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/clear-all-data",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"clear-all-data"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "super Admin login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Parse the response JSON",
+											"const response = pm.response.json();",
+											"console.log(\"Token received:\", response.token);",
+											"",
+											"// Set environment variables if login is successful",
+											"if (pm.response.code === 200 && response.token && response.user) {",
+											"    pm.environment.set(\"super_auth_token\", response.token);",
+											"}",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"google_id\": \"12312321\",\n    \"email\": \"superadmin@iitj.ac.in\",\n    \"name\": \"Test User\",\n    \"phone\": \"\"\n  }"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/google",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"google"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Admin List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/list?role=admin",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"list"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "admin",
+											"description": "admin, super_admin, faculty"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Admin Requests",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/admin/requests?page=1&limit=10&status=pending",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"requests"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "status",
+											"value": "pending"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Admin Request (Approve)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"approve\",\n  \"notes\": \"User has good qualifications\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/requests/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"requests",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Admin Request (Reject)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"reject\",\n  \"notes\": \"User has good qualifications\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/requests/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"requests",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create_super",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"master_id\": \"CAMPUS_SUPER_ADMIN_2025\",\n  \"secret_key\": \"SA_2025_CampusApp_SecretKey_v1!\",\n  \"name\": \"Super Admin\",\n  \"email\": \"superadmin@iitj.ac.in\",\n  \"phone\": \"9999999999\",\n  \"password\": \"SuperAdmin123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/create-super-admin",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"create-super-admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{super_auth_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Auto-add auth token to all requests except login",
+					"const url = pm.request.url.toString();",
+					"const isLoginRequest = url.includes('/auth/google') || url.includes('/health');",
+					"",
+					"if (!isLoginRequest) {",
+					"    const token = pm.environment.get('auth_token');",
+					"    if (token) {",
+					"        pm.request.headers.add({",
+					"            key: 'Authorization',",
+					"            value: 'Bearer ' + token",
+					"        });",
+					"    }",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test to check response format",
+					"pm.test('Response format is valid', function () {",
+					"    pm.response.to.have.status.oneOf([200, 201, 400, 401, 403, 404, 422, 500]);",
+					"    ",
+					"    if (pm.response.code === 200 || pm.response.code === 201) {",
+					"        const response = pm.response.json();",
+					"        pm.expect(response).to.have.property('success');",
+					"        ",
+					"        if (response.success) {",
+					"            pm.expect(response).to.have.property('data');",
+					"        } else {",
+					"            pm.expect(response).to.have.property('message');",
+					"        }",
+					"    }",
+					"});",
+					"",
+					"// Log response for debugging",
+					"console.log('Response Status:', pm.response.code);",
+					"console.log('Response Body:', pm.response.text());"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "super_auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_email",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_user_email",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "subject_id",
+			"value": "1",
+			"type": "string",
+			"description": "Subject ID for update/delete operations"
+		},
+		{
+			"key": "faculty_id",
+			"value": "1",
+			"type": "string",
+			"description": "Faculty ID for faculty-related operations"
+		},
+		{
+			"key": "expertise_id",
+			"value": "1",
+			"type": "string",
+			"description": "Expertise ID for expertise-related operations"
+		},
+		{
+			"key": "note_id",
+			"value": "1",
+			"type": "string",
+			"description": "Note ID for note-related operations"
+		},
+		{
+			"key": "post_id",
+			"value": "1",
+			"type": "string",
+			"description": "Post ID for like and comment operations"
+		},
+		{
+			"key": "reply_id",
+			"value": "1",
+			"type": "string",
+			"description": "Reply/Comment ID for edit/delete operations"
+		}
+	]
+}

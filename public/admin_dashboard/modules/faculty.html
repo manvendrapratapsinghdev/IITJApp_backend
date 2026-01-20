@@ -1,0 +1,106 @@
+<div class="module-header">
+    <h2>Faculty Management</h2>
+    <button class="btn btn-primary" id="addFacultyBtn">Add New Faculty</button>
+</div>
+
+<div class="filter-bar">
+    <div class="search-box">
+        <input type="text" id="facultySearch" placeholder="Search by name or department...">
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="data-table" id="facultyTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table content will be dynamically loaded -->
+        </tbody>
+    </table>
+    <div id="facultyLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div id="facultyError" class="error-container" style="display: none;">
+        <p>Error loading faculty. Please try again.</p>
+        <button class="btn btn-primary" id="retryFacultyBtn">Retry</button>
+    </div>
+    <div id="noFacultyMessage" style="display: none; text-align: center; padding: 20px;">
+        <p>No faculty members found matching your criteria.</p>
+    </div>
+</div>
+
+<!-- Add/Edit Faculty Modal -->
+<div class="modal" id="facultyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="facultyModalTitle">Add New Faculty</h3>
+            <button class="modal-close" id="closeFacultyModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="facultyForm">
+                <div class="form-group">
+                    <label for="facultyName">Full Name</label>
+                    <input type="text" id="facultyName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="facultyDepartment">Department</label>
+                    <input type="text" id="facultyDepartment" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="facultyEmail">Email</label>
+                    <input type="email" id="facultyEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="facultyPhone">Phone Number</label>
+                    <input type="tel" id="facultyPhone" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="facultyDesignation">Designation</label>
+                    <input type="text" id="facultyDesignation" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="facultyBio">Bio</label>
+                    <textarea id="facultyBio" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="facultyJoiningDate">Joining Date</label>
+                    <input type="date" id="facultyJoiningDate" class="form-control">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="saveFacultyBtn">Save Faculty</button>
+            <button class="btn" id="cancelFacultyBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteFacultyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeleteFacultyModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete this faculty member? This action cannot be undone.</p>
+            <p class="text-danger">Warning: Deleting a faculty member may affect subjects and schedules associated with them.</p>
+            <div class="form-group">
+                <label for="deletionReason">Reason for deletion (required):</label>
+                <textarea id="deletionReason" class="form-control" rows="3" placeholder="Please provide a reason for deleting this faculty member..." required></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" id="confirmDeleteFacultyBtn">Delete</button>
+            <button class="btn" id="cancelDeleteFacultyBtn">Cancel</button>
+        </div>
+    </div>
+</div>
