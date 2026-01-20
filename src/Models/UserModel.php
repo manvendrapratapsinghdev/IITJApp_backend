@@ -1000,6 +1000,17 @@ class UserModel {
     return $st->execute([$verified ? 1 : 0, $id]);
   }
 
+  /**
+   * Update user's email address
+   * @param int $id User ID
+   * @param string $email New email address
+   * @return bool Success status
+   */
+  public function updateUserEmail(int $id, string $email): bool {
+    $st = $this->db->prepare('UPDATE users SET email = ? WHERE id = ?');
+    return $st->execute([$email, $id]);
+  }
+
   // ========== OTP Management Methods ==========
 
   /**

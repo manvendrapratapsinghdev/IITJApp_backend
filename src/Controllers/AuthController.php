@@ -883,6 +883,38 @@ class AuthController {
       }
 
       // OTP verified successfully
+      // First check if a user with this Apple ID already exists
+      $existingAppleUser = $this->users->findByAppleId($in['apple_user_id']);
+      
+      if ($existingAppleUser) {
+        // Update the existing Apple user's email and verify it
+        $this->users->updateUserEmail((int)$existingAppleUser['id'], $in['email']);
+        $this->users->updateEmailVerified((int)$existingAppleUser['id'], true);
+        
+        // Generate token
+        $token = AuthCore::issueToken((int)$existingAppleUser['id'], $existingAppleUser['role']);
+        $this->users->saveToken((int)$existingAppleUser['id'], $token);
+        
+        if (!empty($in['device_token'])) {
+          $this->users->updateDeviceToken((int)$existingAppleUser['id'], $in['device_token']);
+        }
+
+        // Clear rate limit
+        $this->users->clearRateLimit($in['email']);
+
+        $existingAppleUser['email'] = $in['email'];
+        $existingAppleUser['auth_token'] = $token;
+        $existingAppleUser['email_verified'] = true;
+        unset($existingAppleUser['password_hash']);
+        $existingAppleUser['is_onboarding_done'] = (bool)$existingAppleUser['is_onboarding_done'];
+
+        return Response::json([
+          'success' => true,
+          'message' => 'Email verified successfully',
+          'user' => $existingAppleUser
+        ]);
+      }
+      
       // Check if email already exists
       $existingUser = $this->users->findByEmail($in['email']);
       
