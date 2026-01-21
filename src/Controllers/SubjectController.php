@@ -15,9 +15,11 @@ class SubjectController {
   }
 
   // GET /semester/subjects - Get list of subjects
+  // Query param: semester (optional) - filter by semester
   public function getSubjects(){
     $p = AuthCore::requireUser();
-    $subjects = $this->subjects->getAll();
+    $semester = $_GET['semester'] ?? null;
+    $subjects = $this->subjects->getAll($semester);
     
     return Response::json([
       'success' => true,

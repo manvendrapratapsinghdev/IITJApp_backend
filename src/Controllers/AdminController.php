@@ -558,14 +558,28 @@ class AdminController {
     //   ], 403);
     // }
     
+    $semester = $_GET['semester'] ?? null;
+    
     try {
       $db = $this->users->getDatabase();
-      $stmt = $db->prepare("
-        SELECT id, name, saturday_status, sunday_status
-        FROM subjects
-        ORDER BY name
-      ");
-      $stmt->execute();
+      
+      $sql = "SELECT id, name, semester, saturday_status, sunday_status
+              FROM subjects";
+      
+      if ($semester !== null) {
+        $sql .= " WHERE semester = :semester";
+      }
+      
+      $sql .= " ORDER BY name";
+      
+      $stmt = $db->prepare($sql);
+      
+      if ($semester !== null) {
+        $stmt->execute(['semester' => $semester]);
+      } else {
+        $stmt->execute();
+      }
+      
       $subjects = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
       return Response::json([

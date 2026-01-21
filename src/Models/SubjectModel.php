@@ -7,7 +7,7 @@ class SubjectModel {
   private PDO $db;
   public function __construct(){ $this->db = Database::pdo(); }
 
-  public function getAll(): array {
+  public function getAll(?string $semester = null): array {
     $sql = "SELECT 
               s.id as subject_id,
               s.code,
@@ -23,12 +23,24 @@ class SubjectModel {
               u.name as faculty_name,
               u.email as faculty_email
             FROM subjects s
-            LEFT JOIN users u ON s.faculty_id = u.id
-            ORDER BY 
+            LEFT JOIN users u ON s.faculty_id = u.id";
+    
+    if ($semester !== null) {
+      $sql .= " WHERE s.semester = :semester";
+    }
+    
+    $sql .= " ORDER BY 
               CASE WHEN s.order IS NULL THEN 1 ELSE 0 END, 
               s.order ASC, 
               s.name ASC";
-    $result = $this->db->query($sql)->fetchAll();
+    
+    if ($semester !== null) {
+      $stmt = $this->db->prepare($sql);
+      $stmt->execute(['semester' => $semester]);
+      $result = $stmt->fetchAll();
+    } else {
+      $result = $this->db->query($sql)->fetchAll();
+    }
     $subjects = [];
     foreach ($result as $row) {
       $subjects[] = [
