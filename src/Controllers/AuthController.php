@@ -403,6 +403,16 @@ class AuthController {
     
     // Allow clearing device token by passing null or empty string
     if (empty($deviceToken)) {
+      // Check if device token exists before clearing
+      $user = $this->users->findById((int)$p['sub']);
+      
+      if (empty($user['device_token'])) {
+        return Response::json([
+          'success' => true,
+          'message' => 'Device token is already cleared'
+        ]);
+      }
+      
       $success = $this->users->clearDeviceToken((int)$p['sub']);
       
       if ($success) {
@@ -446,7 +456,7 @@ class AuthController {
     return Response::json([
       'success' => true,
       'has_device_token' => !empty($user['device_token']),
-      'device_token_set_at' => $user['updated_at'],
+      'device_token_set_at' => !empty($user['device_token']) ? $user['updated_at'] : null,
       'push_notifications_eligible' => $user['is_onboarding_done'] && !$user['is_deleted'] && !$user['is_blocked']
     ]);
   }

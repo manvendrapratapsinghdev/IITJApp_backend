@@ -28,7 +28,7 @@ class UserModel {
     $st->execute([$email]); $r=$st->fetch(); return $r?:null;
   }
   public function findById(int $id): ?array {
-    $st=$this->db->prepare('SELECT id,name,email,phone,role,google_id,apple_user_id,email_verified,is_onboarding_done,bio,links,whatsapp,age,company,expertise,interests,experience,linkedin_url,github_url,admin_request,admin_status,is_deleted,is_blocked,deleted_at,blocked_at,device_token,created_at, auth_token FROM users WHERE id=?');
+    $st=$this->db->prepare('SELECT id,name,email,phone,role,google_id,apple_user_id,email_verified,is_onboarding_done,bio,links,whatsapp,age,company,expertise,interests,experience,linkedin_url,github_url,admin_request,admin_status,is_deleted,is_blocked,deleted_at,blocked_at,device_token,created_at,updated_at,auth_token FROM users WHERE id=?');
     $st->execute([$id]); $r=$st->fetch(); return $r?:null;
   }
 
