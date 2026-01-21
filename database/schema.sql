@@ -24,9 +24,11 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   email VARCHAR(150) NOT NULL UNIQUE,
+  email_verified BOOLEAN NOT NULL DEFAULT TRUE,
   phone VARCHAR(50) NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   google_id VARCHAR(100) NULL UNIQUE,
+  apple_user_id VARCHAR(255) NULL UNIQUE,
   role ENUM('user', 'admin', 'super_admin', 'faculty') NOT NULL DEFAULT 'user',
   is_onboarding_done BOOLEAN NOT NULL DEFAULT FALSE,
   auth_token VARCHAR(500) NULL,
@@ -59,6 +61,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_auth_token (auth_token),
+  INDEX idx_apple_user_id (apple_user_id),
   INDEX idx_role (role),
   INDEX idx_company (company),
   INDEX idx_last_active (last_active),
@@ -307,6 +310,34 @@ CREATE TABLE IF NOT EXISTS post_replies (
     INDEX idx_post_active_replies (post_id, is_deleted, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 
 COMMENT='Stores comments/replies on posts with soft delete support';
+
+-- --------------------------------------------------------
+-- Table structure for table `email_verifications`
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS email_verifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  otp VARCHAR(6) NOT NULL,
+  attempts INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  INDEX idx_email (email),
+  INDEX idx_expires_at (expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+COMMENT='Stores OTP codes for email verification during Apple Sign-In';
+
+-- --------------------------------------------------------
+-- Table structure for table `otp_rate_limits`
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS otp_rate_limits (
+  email VARCHAR(255) PRIMARY KEY,
+  request_count INT NOT NULL DEFAULT 1,
+  window_start TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_window_start (window_start)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+COMMENT='Rate limiting for OTP requests to prevent abuse';
 
 -- --------------------------------------------------------
 -- Restore character set settings
