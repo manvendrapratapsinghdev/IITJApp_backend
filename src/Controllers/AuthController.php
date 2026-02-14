@@ -466,7 +466,8 @@ class AuthController {
    */
   private function isTestAccount($email) {
     $testAccounts = [
-      'tacrotechtest@gmail.com'
+      'tacrotechtest@gmail.com',
+      'dineshjoshi@iitj.ac.in'
       // Add more test accounts here as needed
     ];
     return in_array(strtolower($email), $testAccounts);
